@@ -1,7 +1,5 @@
-// content.config.ts — tells Astro where your posts live and what
-// info every post must have at the top (its "frontmatter").
-// If a post is missing a title or has a bad date, the build will
-// stop and tell you exactly which file is wrong.
+// content.config.ts — tells Astro where posts live and what info every post must have at the top (its "frontmatter").
+
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
