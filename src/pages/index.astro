@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('posts', (p) => !p.data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
-<BaseLayout title="My Notebook">
+<BaseLayout title="The Spot">
   <h1>Out Blog Spot</h1>
   <p class="intro">My first blog that I threw on cloudflare. Place for me to dump thoughts into the void</p>
 
