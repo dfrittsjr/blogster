@@ -1,0 +1,32 @@
+---
+// BaseLayout.astro — the frame around every page: <head>, header, footer.
+// The part between the --- fences runs when the site is built.
+// "Astro.props" holds whatever values a page passes in.
+import '../styles/global.css';
+
+const { title, description = 'Notes on what I’m reading and learning.' } = Astro.props;
+const siteName = 'My Notebook'; // ← change me
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title === siteName ? siteName : `${title} · ${siteName}`}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="/" class="site-name">{siteName}</a>
+    </header>
+
+    <main>
+      <!-- <slot /> is where the page's own content gets inserted. -->
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      © {new Date().getFullYear()} {siteName}
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+---
+// [...slug].astro — ONE template that builds a page for EVERY post.
+// The brackets mean "fill this part of the URL in from data":
+//   src/content/posts/hello-world.mdx → yoursite.com/posts/hello-world/
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+// Tell Astro which pages to make: one per non-draft post.
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', (p) => !p.data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post); // turns the Markdown into HTML
+---
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article>
+    <h1>{post.data.title}</h1>
+    <p class="meta">
+      {post.data.date.toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' })}
+      {post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
+    </p>
+    <Content />
+  </article>
+  <p><a href="/">← All posts</a></p>
+</BaseLayout>

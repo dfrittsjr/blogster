@@ -1,0 +1,26 @@
+---
+// index.astro — the home page. Files in src/pages become URLs:
+//   src/pages/index.astro → yoursite.com/
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Grab every post that isn't a draft, newest first.
+const posts = (await getCollection('posts', (p) => !p.data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+<BaseLayout title="My Notebook">
+  <h1>Greetings Friends</h1>
+  <p class="intro">This is a spot where I can dump my thoughts on anything I want. Books, theology, engineering, music, friends, family</p>
+
+  <ul class="post-list">
+    {posts.map((post) => (
+      <li>
+        <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+        <time datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString('en-US', { dateStyle: 'medium', timeZone: 'UTC' })}
+        </time>
+        <p>{post.data.description}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

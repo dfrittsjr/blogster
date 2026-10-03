@@ -1,0 +1,12 @@
+---
+// Figure.astro — an image with a caption underneath.
+// Use it inside any .mdx post like this:
+//   <Figure src="/images/my-photo.jpg" alt="What's in it" caption="My caption" />
+//
+// "alt" describes the image for screen readers and is required on purpose.
+const { src, alt, caption } = Astro.props;
+---
+<figure>
+  <img src={src} alt={alt} loading="lazy" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
